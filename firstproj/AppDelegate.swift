@@ -7,11 +7,20 @@
 //
 
 import UIKit
+import HealthKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let healthStore = HKHealthStore()
+    
+    func applecationShouldRequestHealthAuthorization(application: UIApplication){
+//        self.healthStore.handleAuthorizationForExtensionWithCompletion{success, error int print("applicationShouldRequestHealthAuthorization: \(success)")
+//        }
+        
+//        self.healthStore.handleAuthorizationForExtensionWithCompletion(<#T##completion: (Bool, NSError?) -> Void##(Bool, NSError?) -> Void#>)
+    }
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
