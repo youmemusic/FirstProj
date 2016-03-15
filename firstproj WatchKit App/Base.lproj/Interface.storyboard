@@ -10,17 +10,12 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="firstproj_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <button width="1" alignment="left" title="CountUp" id="jpu-Ta-yFg">
+                        <button width="1" alignment="left" title="Start" id="jpu-Ta-yFg">
                             <connections>
                                 <action selector="fetchBtnTapped" destination="AgC-eL-Hgc" id="4rE-MN-YjX"/>
                             </connections>
                         </button>
                         <label alignment="left" text="Label" id="cUf-9Y-jbl"/>
-                        <button width="1" alignment="left" title="CountDown" id="4ou-yF-HgQ">
-                            <connections>
-                                <action selector="CountDown" destination="AgC-eL-Hgc" id="Q5S-ca-Vco"/>
-                            </connections>
-                        </button>
                     </items>
                     <connections>
                         <outlet property="button" destination="jpu-Ta-yFg" id="yRz-h5-0jF"/>

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A1926F51C7B233D000E9D28 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1926F41C7B233D000E9D28 /* HealthKit.framework */; };
+		0A4C08C01C985E4600FAEFC5 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4C08BF1C985E4600FAEFC5 /* HealthKit.framework */; };
 		0A596F621C61EF8000ED6D99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A596F611C61EF8000ED6D99 /* AppDelegate.swift */; };
 		0A596F641C61EF8000ED6D99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A596F631C61EF8000ED6D99 /* ViewController.swift */; };
 		0A596F671C61EF8000ED6D99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A596F651C61EF8000ED6D99 /* Main.storyboard */; };
@@ -84,6 +85,8 @@
 /* Begin PBXFileReference section */
 		0A1926F41C7B233D000E9D28 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		0A1926F61C7B233D000E9D28 /* firstproj.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = firstproj.entitlements; sourceTree = "<group>"; };
+		0A4C08BF1C985E4600FAEFC5 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.1.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		0A4C08C11C985E4600FAEFC5 /* firstproj WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "firstproj WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		0A596F5E1C61EF8000ED6D99 /* firstproj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = firstproj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A596F611C61EF8000ED6D99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A596F631C61EF8000ED6D99 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A4C08C01C985E4600FAEFC5 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +150,7 @@
 		0A596F551C61EF8000ED6D99 = {
 			isa = PBXGroup;
 			children = (
+				0A4C08BF1C985E4600FAEFC5 /* HealthKit.framework */,
 				0A1926F41C7B233D000E9D28 /* HealthKit.framework */,
 				0A596F601C61EF8000ED6D99 /* firstproj */,
 				0A596F751C61EF8000ED6D99 /* firstprojTests */,
@@ -213,6 +218,7 @@
 		0A596F991C61EF8100ED6D99 /* firstproj WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				0A4C08C11C985E4600FAEFC5 /* firstproj WatchKit Extension.entitlements */,
 				0A596F9C1C61EF8100ED6D99 /* InterfaceController.swift */,
 				0A596F9E1C61EF8100ED6D99 /* ExtensionDelegate.swift */,
 				0A596FA01C61EF8100ED6D99 /* NotificationController.swift */,
@@ -357,6 +363,11 @@
 					0A596F941C61EF8100ED6D99 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 9MN72CG488;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -603,6 +614,7 @@
 		0A596FA81C61EF8100ED6D99 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "firstproj WatchKit Extension/firstproj WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "firstproj WatchKit Extension/Info.plist";
@@ -620,6 +632,7 @@
 		0A596FA91C61EF8100ED6D99 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "firstproj WatchKit Extension/firstproj WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "firstproj WatchKit Extension/Info.plist";
