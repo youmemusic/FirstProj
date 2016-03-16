@@ -15,11 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let healthStore = HKHealthStore()
     
-    func applecationShouldRequestHealthAuthorization(application: UIApplication){
-//        self.healthStore.handleAuthorizationForExtensionWithCompletion{success, error int print("applicationShouldRequestHealthAuthorization: \(success)")
-//        }
+    func applicationShouldRequestHealthAuthorization(application: UIApplication){
         
-//        self.healthStore.handleAuthorizationForExtensionWithCompletion(<#T##completion: (Bool, NSError?) -> Void##(Bool, NSError?) -> Void#>)
+        let dataTypes = Set([HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!])
+        healthStore.requestAuthorizationToShareTypes(nil, readTypes: dataTypes){
+            (success, error) in
+            
+            if success{
+                print("アクセス許可取得")
+            }
+            
+        }
+        
     }
 
 

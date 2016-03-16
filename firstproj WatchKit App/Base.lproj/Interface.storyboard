@@ -15,7 +15,7 @@
                                 <action selector="fetchBtnTapped" destination="AgC-eL-Hgc" id="4rE-MN-YjX"/>
                             </connections>
                         </button>
-                        <label alignment="left" text="Label" id="cUf-9Y-jbl"/>
+                        <label alignment="left" id="cUf-9Y-jbl"/>
                     </items>
                     <connections>
                         <outlet property="button" destination="jpu-Ta-yFg" id="yRz-h5-0jF"/>

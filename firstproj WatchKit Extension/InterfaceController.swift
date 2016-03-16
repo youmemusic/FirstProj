@@ -53,20 +53,38 @@ class InterfaceController: WKInterfaceController{
     // =========================================================================
     // MARK: - Actions
     @IBAction func fetchBtnTapped(){
-        myLabel.setText("enjoy!")
-        guard heartRateQuery == nil else { return }
-        
-        if heartRateQuery == nil {
-            //start
-            heartRateQuery = self.createStreamingQuery()
-            healthStore.executeQuery(self.heartRateQuery!)
-            button.setTitle("Stop")
-        }
-        else {
-            //stop
-            healthStore.stopQuery(self.heartRateQuery!)
-            heartRateQuery = nil
-            button.setTitle("Start")
+        myLabel.setText("heart rate")
+//        guard heartRateQuery == nil else { return }
+//        
+//        if heartRateQuery == nil {
+//            //start
+//            heartRateQuery = self.createStreamingQuery()
+//            healthStore.executeQuery(self.heartRateQuery!)
+//            button.setTitle("Stop")
+//        }
+//        else {
+//            //stop
+//            healthStore.stopQuery(self.heartRateQuery!)
+//            heartRateQuery = nil
+//            button.setTitle("Start")
+//        }
+        //測定スタート
+        if isRunning == false {
+            //workoutSessionを作成
+            self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.Other, locationType: HKWorkoutSessionLocationType.Unknown)
+//            self.workoutSession!.delegate = self
+            
+            //修正START 2015/12/12
+            //workoutSessionをスタート。
+            self.healthStore.startWorkoutSession(self.workoutSession!)
+            //修正END
+            
+            //測定ストップ
+        }else if isRunning == true {
+            //修正START 2015/12/12
+            //workoutSessionをストップ。
+            self.healthStore.endWorkoutSession(self.workoutSession!)
+            //修正END
         }
     }
     
@@ -155,62 +173,65 @@ class InterfaceController: WKInterfaceController{
 //        }
 //    }
 //    
-//    /*デリゲートメソッド*/
-//    //workoutSessionの状態が変化した時に呼ばれる
-//    func workoutSession(workoutSession: HKWorkoutSession,didChangToState toState:HKWorkoutSessionState,
-//        fromState:HKWorkoutSessionState,date:NSDate){
-//            switch toState{
-//            case .Running:
+    /*デリゲートメソッド*/
+    //workoutSessionの状態が変化した時に呼ばれる
+    func workoutSession(workoutSession: HKWorkoutSession,didChangToState toState:HKWorkoutSessionState,
+        fromState:HKWorkoutSessionState,date:NSDate){
+            switch toState{
+            case .Running:
 //                print("workoutSession: .Running")
-//                self.heartRateQuery = createHeartRateStreamingQuery(date)
-//                self.healthStore.executeQuery(self.heartRateQuery!)
-//                self.button.setTitle("STOP")
-//                self.isRunning = true
-//                
-//            case .Ended:
+                myLabel.setText("workoutSession: .Running")
+                self.heartRateQuery = createHeartRateStreamingQuery(date)
+                self.healthStore.executeQuery(self.heartRateQuery!)
+                self.button.setTitle("STOP")
+                self.isRunning = true
+                
+            case .Ended:
 //                print("workoutSession: .Ended")
-//                self.healthStore.stopQuery(self.heartRateQuery!)
-//                self.myLabel.setText("---")
-//                self.button.setTitle("START")
-//                self.isRunning = false
-//            
-//            default:
+                myLabel.setText("workoutSession: .Ended")
+                self.healthStore.stopQuery(self.heartRateQuery!)
+                self.myLabel.setText("---")
+                self.button.setTitle("START")
+                self.isRunning = false
+            
+            default:
 //                print("Unexpected workout session state \(toState)")
-//                
-//            }
-//    }
-//    
-//    
-//    //エラーが発生した時に呼ばれる
-//    func workoutSession(workoutSession: HKWorkoutSession,didFailWithError error:NSError){
-//        //...
-//    }
-//    
-//    func createHeartRateStreamingQuery(workoutStartDate: NSDate) ->HKQuery{
-//        let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)
-//        let heartRateQuery = HKAnchoredObjectQuery(type: sampleType!, predicate: nil, anchor: nil, limit: 0){
-//            (query, samokeObjects, DelObjects,newAnchor,error) -> Void in
-//        }
-//        
-//        //アップデートハンドラーを設定
-//        //心拍数情報が更新されると呼ばれる
-//        //sampleコードの続きを打てばOK！
-//        heartRateQuery.updateHandler = {(query,samples,deleteObjects,newAnchor,error) -> Void in
-//        self.updateHeartRate(samples)
-//        }
-//        
-//        return heartRateQuery
-//    }
-//    
-//    //アップデートハンドラー
-//    func updateHeartRate(samples: [HKSample]?){
-//        //心拍数を取得
-//        guard let heartRateSamples = samples as?[HKQuantitySample] else {return}
-//        let sample = heartRateSamples.first
-//        let value = Int(sample!.quantity.doubleValueForUnit(self.heartRateUnit))
-//        myLabel.setText(String(value))
-//
-//}
+                myLabel.setText("Unexpected workout session state \(toState)")
+                
+            }
+    }
+    
+
+    //エラーが発生した時に呼ばれる
+    func workoutSession(workoutSession: HKWorkoutSession,didFailWithError error:NSError){
+        //...
+    }
+    
+    func createHeartRateStreamingQuery(workoutStartDate: NSDate) ->HKQuery{
+        let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)
+        let heartRateQuery = HKAnchoredObjectQuery(type: sampleType!, predicate: nil, anchor: nil, limit: 0){
+            (query, samokeObjects, DelObjects,newAnchor,error) -> Void in
+        }
+        
+        //アップデートハンドラーを設定
+        //心拍数情報が更新されると呼ばれる
+        //sampleコードの続きを打てばOK！
+        heartRateQuery.updateHandler = {(query,samples,deleteObjects,newAnchor,error) -> Void in
+        self.updateHeartRate(samples)
+        }
+        
+        return heartRateQuery
+    }
+    
+    //アップデートハンドラー
+    func updateHeartRate(samples: [HKSample]?){
+        //心拍数を取得
+        guard let heartRateSamples = samples as?[HKQuantitySample] else {return}
+        let sample = heartRateSamples.first
+        let value = Int(sample!.quantity.doubleValueForUnit(self.heartRateUnit))
+        myLabel.setText(String(value))
+
+}
     
     
     /*HeartKitへのアクセス許可を取得するクラスを追加する！
